@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy } from "firebase/firestore";
 
 // TODO: 파이어베이스 설정값(firebaseConfig)을 여기에 붙여넣어 주세요!
 const firebaseConfig = {
@@ -45,3 +45,25 @@ export const saveApplication = async (applicationData: any) => {
     throw e;
   }
 };
+
+// 데이터를 불러오는 함수 (관리자용)
+export const getApplications = async () => {
+  if (!db) {
+    console.warn("Firebase is not initialized.");
+    return [];
+  }
+  
+  try {
+    const q = query(collection(db, "applications"), orderBy("submittedAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    const data: any[] = [];
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+    return data;
+  } catch (e) {
+    console.error("Error fetching documents: ", e);
+    throw e;
+  }
+};
+
