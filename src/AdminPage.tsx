@@ -12,7 +12,7 @@ export default function AdminPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === '0000') {
+    if (password === '00347') {
       setIsAuthenticated(true);
       fetchData();
     } else {
