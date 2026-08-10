@@ -172,7 +172,7 @@ function App() {
         </div>
 
         <div className="hero-section">
-          <img src="/shutter-sai.jpg" alt="Shutter Sai Poster" className="hero-image" />
+          <img src="/shutter-sai.png" alt="Shutter Sai Poster" className="hero-image" />
           <div className="hero-overlay"></div>
         </div>
 
