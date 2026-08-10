@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, Check, CheckCircle2 } from 'lucide-react';
+import { Camera, CheckCircle2 } from 'lucide-react';
 import './App.css';
 
 function App() {
