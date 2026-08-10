@@ -178,9 +178,9 @@ function App() {
 
         <div className="header-content">
           <div className="polaroids-container">
-            <div className="polaroid"><img src="/shutter-sai.jpg" alt="p1" /></div>
-            <div className="polaroid"><img src="/shutter-sai.jpg" alt="p2" /></div>
-            <div className="polaroid"><img src="/shutter-sai.jpg" alt="p3" /></div>
+            <div className="polaroid"><img src="/P1.jpg" alt="p1" /></div>
+            <div className="polaroid"><img src="/P2.jpg" alt="p2" /></div>
+            <div className="polaroid"><img src="/P3.jpg" alt="p3" /></div>
           </div>
           
           <div className="club-label">
