@@ -228,7 +228,7 @@ function App() {
             <div className="form-group">
               <label className="form-label">3. 출생연도 <span className="required-mark">*</span></label>
               <div className="radio-group">
-                {['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007'].map(option => (
+                {['1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007'].map(option => (
                   <label key={option} className={`radio-label ${formData.birthYear === option ? 'selected' : ''}`}>
                     <input type="radio" name="birthYear" value={option} checked={formData.birthYear === option} onChange={handleInputChange} required />
                     {option}
@@ -349,10 +349,10 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label className="form-label">14. 평소 주말 활동 가능 시간대를 알려주세요. <span className="required-mark">*</span></label>
+              <label className="form-label">14. 평소 평일/주말 활동 가능 시간대를 알려주세요. <span className="required-mark">*</span></label>
               <span className="help-text">복수 선택 가능</span>
               <div className="checkbox-group" style={{marginTop: '12px'}}>
-                {['토요일 낮', '토요일 저녁', '일요일 낮', '일요일 저녁', '대부분 가능', '일정에 따라 달라요'].map(option => (
+                {['평일 낮', '평일 저녁', '토요일 낮', '토요일 저녁', '일요일 낮', '일요일 저녁', '대부분 가능', '일정에 따라 달라요'].map(option => (
                   <label key={option} className={`checkbox-label ${formData.timeSlots.includes(option) ? 'selected' : ''}`}>
                     <input type="checkbox" checked={formData.timeSlots.includes(option)} onChange={() => handleCheckboxChange('timeSlots', option)} />
                     {option}
