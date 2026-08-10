@@ -1,3 +1,42 @@
+/* Dark Room Toggle */
+.theme-toggle-wrapper {
+  position: absolute;
+  top: 16px;
+  right: 28px;
+  z-index: 30;
+}
+
+.theme-toggle-btn {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.dark-room .theme-toggle-btn {
+  background: rgba(255, 74, 74, 0.2);
+  border-color: rgba(255, 74, 74, 0.5);
+  color: #ff4a4a;
+}
+
+.dark-room .theme-toggle-btn:hover {
+  background: rgba(255, 74, 74, 0.3);
+}
+
 .hero-section {
   position: relative;
   width: 100%;
@@ -10,6 +49,11 @@
   height: 100%;
   object-fit: cover;
   filter: brightness(0.9) contrast(1.05);
+  transition: filter 0.5s ease;
+}
+
+.dark-room .hero-image {
+  filter: brightness(0.6) contrast(1.2) sepia(0.8) hue-rotate(-30deg) saturate(1.5);
 }
 
 .hero-overlay {
@@ -22,10 +66,63 @@
 }
 
 .header-content {
-  padding: 32px 24px;
+  position: relative;
+  padding: 32px 44px; /* adjusted for 20px film borders */
   background-color: var(--surface-color);
   border-bottom: 1px solid var(--border-color);
   text-align: center;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+/* Polaroids */
+.polaroids-container {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.polaroid {
+  background: white;
+  padding: 6px 6px 20px 6px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  transform-origin: top center;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto; /* allow hover */
+  width: 80px;
+  height: 90px;
+}
+
+.polaroid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #eee;
+}
+
+.polaroid:nth-child(1) { transform: rotate(-8deg) translateY(10px); }
+.polaroid:nth-child(2) { transform: rotate(5deg) translateY(-5px); z-index: 2; }
+.polaroid:nth-child(3) { transform: rotate(-3deg) translateY(15px); }
+
+.polaroid:hover {
+  transform: scale(1.2) rotate(0deg) translateY(5px) !important;
+  z-index: 10 !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.dark-room .polaroid {
+  background: #2a1f1f;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.dark-room .polaroid img {
+  filter: grayscale(0.5) sepia(0.5) hue-rotate(-30deg);
 }
 
 .club-label {
@@ -37,6 +134,7 @@
   color: var(--text-secondary);
   margin-bottom: 12px;
   letter-spacing: 1px;
+  margin-top: 20px; /* space for polaroids */
 }
 
 .main-title {
@@ -69,21 +167,23 @@
   border-radius: 20px;
   font-size: 0.85rem;
   color: var(--text-secondary);
+  transition: all 0.3s ease;
 }
 
 .intro-quote {
   padding: 20px;
-  background-color: #f9f8f6;
+  background-color: var(--bg-color);
   border-left: 3px solid var(--accent-color);
   font-size: 0.95rem;
   color: var(--text-secondary);
   text-align: left;
   line-height: 1.6;
   border-radius: 0 4px 4px 0;
+  transition: background-color 0.5s ease;
 }
 
 .form-container {
-  padding: 32px 24px;
+  padding: 32px 44px; /* adjusted for film borders */
 }
 
 .form-section {
@@ -103,6 +203,8 @@
 
 .form-group {
   margin-bottom: 28px;
+  position: relative;
+  z-index: 21; /* Above blur layer */
 }
 
 .form-label {
@@ -114,7 +216,7 @@
 }
 
 .required-mark {
-  color: #d9534f;
+  color: var(--accent-color);
   margin-left: 4px;
 }
 
@@ -125,14 +227,21 @@
   border-radius: 6px;
   background-color: var(--surface-color);
   font-size: 1rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   color: var(--text-primary);
+  position: relative;
 }
 
 .input-text:focus, .textarea:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(140, 120, 83, 0.1);
+  box-shadow: 0 0 0 4px rgba(140, 120, 83, 0.15);
+  transform: scale(1.02);
+  z-index: 22;
+}
+
+.dark-room .input-text:focus, .dark-room .textarea:focus {
+  box-shadow: 0 0 0 4px rgba(255, 74, 74, 0.15);
 }
 
 .textarea {
@@ -151,7 +260,6 @@
   align-items: center;
   gap: 10px;
   font-size: 0.95rem;
-  cursor: pointer;
   padding: 12px 16px;
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -160,12 +268,16 @@
 }
 
 .radio-label:hover, .checkbox-label:hover {
-  background-color: #fcfcfb;
+  background-color: var(--bg-color);
 }
 
 .radio-label.selected, .checkbox-label.selected {
   border-color: var(--accent-color);
   background-color: rgba(140, 120, 83, 0.05);
+}
+
+.dark-room .radio-label.selected, .dark-room .checkbox-label.selected {
+  background-color: rgba(255, 74, 74, 0.05);
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -182,11 +294,12 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .agreements-box {
-  background-color: #f9f8f6;
+  background-color: var(--bg-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 24px;
+  transition: background-color 0.5s ease;
 }
 
 .agreement-item {
@@ -231,26 +344,32 @@ input[type="radio"], input[type="checkbox"] {
   width: 100%;
   padding: 18px;
   background-color: var(--text-primary);
-  color: white;
+  color: var(--surface-color);
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 }
 
-.submit-btn:hover {
-  background-color: #1a1a19;
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  background-color: var(--text-secondary);
+}
+
+.dark-room .submit-btn:hover:not(:disabled) {
+  background-color: #ff3333;
+  box-shadow: 0 10px 30px rgba(255, 74, 74, 0.3);
 }
 
 .submit-btn:disabled {
   background-color: var(--border-color);
-  cursor: not-allowed;
+  color: var(--text-secondary);
 }
 
 /* Success View */
@@ -263,6 +382,8 @@ input[type="radio"], input[type="checkbox"] {
   text-align: center;
   padding: 40px 24px;
   background-color: var(--surface-color);
+  position: relative;
+  z-index: 30; /* Above borders */
 }
 
 .success-icon {
@@ -275,6 +396,10 @@ input[type="radio"], input[type="checkbox"] {
   justify-content: center;
   margin-bottom: 24px;
   color: var(--accent-color);
+}
+
+.dark-room .success-icon {
+  background-color: rgba(255, 74, 74, 0.1);
 }
 
 .success-title {
