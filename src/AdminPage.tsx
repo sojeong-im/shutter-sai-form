@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { getApplications } from './firebase';
 import { Camera, Lock, RefreshCw, FileText } from 'lucide-react';
 import './App.css'; // Reuse basic styles
