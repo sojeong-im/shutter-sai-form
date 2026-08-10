@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Camera, CheckCircle2, Moon, Sun } from 'lucide-react';
+import { saveApplication } from './firebase';
 import './App.css';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
   const [isDarkRoom, setIsDarkRoom] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -61,9 +63,10 @@ function App() {
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.agreement) {
+    if (formData.agreement && !isSubmitting) {
+      setIsSubmitting(true);
       // Trigger flash and shutter sound
       setIsFlashing(true);
       
@@ -85,12 +88,23 @@ function App() {
         // ignore audio errors
       }
 
-      // Wait for flash animation before showing success
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        setIsSubmitted(true);
+      try {
+        // Save to Firebase
+        await saveApplication(formData);
+        
+        // Wait for flash animation before showing success
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          setIsSubmitted(true);
+          setIsFlashing(false);
+          setIsSubmitting(false);
+        }, 500); // 0.5s match animation
+      } catch (error) {
+        console.error("Submission failed", error);
+        alert("제출에 실패했습니다. 잠시 후 다시 시도해주세요.");
+        setIsSubmitting(false);
         setIsFlashing(false);
-      }, 500); // 0.5s match animation
+      }
     }
   };
 
@@ -388,8 +402,8 @@ function App() {
 
           <div className="submit-section slide-up delay-4">
             <p className="submit-message">우리의 다음 장면에서 만나요. 🌿</p>
-            <button type="submit" className="submit-btn" disabled={!isFormValid()}>
-              <Camera size={20} /> 📸 셔터 사이 3기 지원하기
+            <button type="submit" className="submit-btn" disabled={!isFormValid() || isSubmitting}>
+              {isSubmitting ? '제출 중...' : <><Camera size={20} /> 📸 셔터 사이 3기 지원하기</>}
             </button>
           </div>
 
