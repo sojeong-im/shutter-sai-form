@@ -17,6 +17,7 @@ function App() {
     status: '',
     location: '',
     devices: [] as string[],
+    cameraModel: '',
     skillLevel: '',
     photoTypes: [] as string[],
     reason: '',
@@ -94,6 +95,9 @@ function App() {
   };
 
   const isFormValid = () => {
+    const isCameraSelected = formData.devices.includes('카메라(DSLR, 미러리스, 필름 등)');
+    const isCameraModelValid = isCameraSelected ? formData.cameraModel.trim() !== '' : true;
+
     return (
       formData.name.trim() !== '' &&
       formData.gender !== '' &&
@@ -103,6 +107,7 @@ function App() {
       formData.status !== '' &&
       formData.location.trim() !== '' &&
       formData.devices.length > 0 &&
+      isCameraModelValid &&
       formData.skillLevel !== '' &&
       formData.reason.trim() !== '' &&
       formData.timeSlots.length > 0 &&
@@ -254,13 +259,18 @@ function App() {
               <label className="form-label">8. 주로 어떤 기기로 사진을 찍으시나요? <span className="required-mark">*</span></label>
               <span className="help-text">복수 선택 가능</span>
               <div className="checkbox-group" style={{marginTop: '12px'}}>
-                {['아이폰', '갤럭시', 'DSLR', '미러리스', '필름 카메라', '디지털카메라 / 컴팩트 카메라', '기타'].map(option => (
+                {['아이폰', '안드로이드(갤럭시 등)', '카메라(DSLR, 미러리스, 필름 등)'].map(option => (
                   <label key={option} className={`checkbox-label ${formData.devices.includes(option) ? 'selected' : ''}`}>
                     <input type="checkbox" checked={formData.devices.includes(option)} onChange={() => handleCheckboxChange('devices', option)} />
                     {option}
                   </label>
                 ))}
               </div>
+              {formData.devices.includes('카메라(DSLR, 미러리스, 필름 등)') && (
+                <div style={{marginTop: '12px', animation: 'fadeIn 0.3s ease-out'}}>
+                  <input type="text" name="cameraModel" className="input-text" value={formData.cameraModel} onChange={handleInputChange} onFocus={handleFocus} onBlur={handleBlur} placeholder="사용하시는 카메라 기종을 적어주세요 (예: 캐논 AE-1, 소니 A7M4 등)" required />
+                </div>
+              )}
             </div>
 
             <div className="form-group">
