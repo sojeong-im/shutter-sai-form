@@ -3,12 +3,13 @@ import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/fire
 
 // TODO: 파이어베이스 설정값(firebaseConfig)을 여기에 붙여넣어 주세요!
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAhI4VnzKD0PeqMQs2nCt0yTl1T4DUJrak",
+  authDomain: "shutter-sai.firebaseapp.com",
+  projectId: "shutter-sai",
+  storageBucket: "shutter-sai.firebasestorage.app",
+  messagingSenderId: "998334145021",
+  appId: "1:998334145021:web:c1e31128d00fdd8d3cf994",
+  measurementId: "G-Q5JMQ7LRHK"
 };
 
 // 파이어베이스 초기화 (설정값이 유효할 때만)
